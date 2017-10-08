@@ -96,9 +96,9 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
     def replace_verb(matchobj):
       subject = matchobj.group(1)
       verb = matchobj.group(2)
-      whitespace = matchobj.group(4)
+      whitespace = matchobj.group(3)
       return "{0}does not {1}{2}".format(subject, verb, whitespace)
-    verb_regex = r'(It |it |)(?P<verb>\w+)(es|s)( |$)'
+    verb_regex = r'(It |it |)(?P<verb>\w+)s( |$)'
     if re.search(verb_regex, sentence):
       return re.sub(verb_regex, replace_verb, sentence, 1)
 
