@@ -36,9 +36,6 @@ class TestNegateSentence(TestCase):
   def test_negate_has_an(self):
     self.check_substitution('"A man has an animal"', '"A man does not have an animal"')
 
-  def test_negate_has_no(self):
-    self.check_substitution('"A man has no face"', '"A man has a face"')
-
   def test_negate_doesnt_have(self):
     self.check_substitution('"A man doesn\'t have an animal"', '"A man has an animal"')
 
