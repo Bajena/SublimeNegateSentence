@@ -61,6 +61,9 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
       return sentence.replace(" is ", " is not ")
 
     # has
+    if sentence.find(" does not have ") > -1:
+      return sentence.replace(" does not have ", " has ")
+
     if sentence.find(" doesn't have ") > -1:
       return sentence.replace(" doesn't have ", " has ")
 

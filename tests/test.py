@@ -39,6 +39,9 @@ class TestNegateSentence(TestCase):
   def test_negate_doesnt_have(self):
     self.check_substitution('"A man doesn\'t have an animal"', '"A man has an animal"')
 
+  def test_negate_does_not_have(self):
+    self.check_substitution('"A man does not have an animal"', '"A man has an animal"')
+
   def test_negate_shouldnt(self):
     self.check_substitution('"It shouldn\'t be red"', '"It should be red"')
 
