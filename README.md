@@ -9,7 +9,7 @@ or use wget:
 username=`id -un`
 wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/negatesentence.py -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/negatesentence.py"
 wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Default (OSX).sublime-keymap -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default (OSX).sublime-keymap"
-wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Main.sublime-menu -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default (OSX).sublime-keymap"
+wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Main.sublime-menu -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Main.sublime-menu"
 ```
 
 
