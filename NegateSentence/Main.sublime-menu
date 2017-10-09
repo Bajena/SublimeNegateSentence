@@ -1,0 +1,13 @@
+[
+{
+  "id" : "NegateSentence",
+  "caption": "NegateSentence",
+  "children":
+  [
+  {
+    "caption" : "run",
+    "command" : "negate_sentence"
+  }
+  ]
+}
+]

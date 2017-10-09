@@ -1,0 +1,6 @@
+[
+{
+  "keys": ["super+shift+c"],
+  "command": "negate_sentence"
+}
+]
