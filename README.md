@@ -6,9 +6,10 @@ Copy `negatesentence.py` and `NegateSentence` directory to `/Users/<your-user-na
 
 or use wget:
 ```bash
-wget https://github.com/Bajena/SublimeNegateSentence/blob/master/negatesentence.py -P /Users/<your-user-name>/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/
-wget https://github.com/Bajena/SublimeNegateSentence/blob/master/NegateSentence/Default (OSX).sublime-keymap -P /Users/<your-user-name>/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/NegateSentence
-wget https://github.com/Bajena/SublimeNegateSentence/blob/master/NegateSentence/Main.sublime-menu -P /Users/<your-user-name>/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/NegateSentence
+username=`id -un`
+wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/negatesentence.py -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/negatesentence.py"
+wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Default (OSX).sublime-keymap -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default (OSX).sublime-keymap"
+wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Main.sublime-menu -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default (OSX).sublime-keymap"
 ```
 
 
