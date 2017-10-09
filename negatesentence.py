@@ -2,32 +2,6 @@ import sublime
 import sublime_plugin
 import re
 
-'''
-Examples:
-"it does not do stuff" -> "it does stuff"
-`it does not do ${stuff}` -> `it does ${stuff}`
-"it should do stuff" -> "it shouldn't do stuff"
-"it has a name" -> "it does not have a name"
-"it shouldn't do stuff" -> "it should do stuff"
-'it should do stuff' -> 'it should not do stuff'
-'it shouldn\'t do stuff' -> 'it should do stuff'
-"They do stuff" -> "They don't do stuff"
-'''
-
-'''
-Basic flow:
-1. Find beginning of current quote. If no quote take whole line (?).
-2. Find a subject and verb. If quoted string is not a sentence - quit.
-3. Negate the verb taking subject's plurality into account.
-4. If single quotes -> use long negation (does not) else use short (doesn't).
-'''
-
-'''
-Advanded usage:
-- [ ] Negate in selection
-- [ ] Use with multiple selections
-'''
-
 class NegateSentenceCommand(sublime_plugin.TextCommand):
   def description():
     "Negates a sentence (present simple only)"
