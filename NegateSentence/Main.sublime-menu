@@ -1,13 +1,12 @@
 [
-{
-  "id" : "NegateSentence",
-  "caption": "NegateSentence",
-  "children":
-  [
-  {
-    "caption" : "run",
-    "command" : "negate_sentence"
-  }
-  ]
-}
+    {
+        "id": "edit",
+        "children": [
+          {
+            "id": "NegateSentence",
+            "caption": "NegateSentence",
+            "command": "negate_sentence"
+          }
+        ]
+    }
 ]

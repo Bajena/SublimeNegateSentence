@@ -1,6 +1,3 @@
 [
-{
-  "keys": ["super+shift+c"],
-  "command": "negate_sentence"
-}
+  { "keys": ["super+alt+n"], "command": "negate_sentence" }
 ]

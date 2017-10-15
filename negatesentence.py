@@ -19,7 +19,7 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
     print("Quote end: {0}".format(quote_end))
 
     if not in_quotes:
-      print("No quotes found")
+      show_message("No quotes found")
       return
 
     word_region = sublime.Region(quote_start + 1, quote_end)
@@ -37,7 +37,6 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
     current_line_start = self.current_line_start()
     i = self.cursor_position - 1
     while i >= current_line_start:
-      print("Quote start ({0}): {1}".format(i, self.char_at(i)))
       if self.char_at(i) == '"':
         return i
       i = i-1
@@ -48,7 +47,6 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
     current_line_end = self.current_line_end()
     i = self.cursor_position
     while i <= current_line_end:
-      print("Quote end ({0}): {1}".format(i, self.char_at(i)))
       if self.char_at(i) == '"':
         return i
       i = i+1
@@ -68,6 +66,8 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
     return self.view.substr(region)
 
 class SentenceNegator:
+  IRREGULAR_ES_VERB_ENDINGS = ["ss", "x", "ch", "sh", "o"]
+
   def negate(self, sentence):
     print("Negating sentence: {0}".format(sentence))
     # is
@@ -120,10 +120,6 @@ class SentenceNegator:
     if sentence.find("can ") > -1:
       return sentence.replace("can ", "cannot ")
 
-    # does not do
-    if sentence.find("does not do") > -1:
-      return sentence.replace("does not do", "does")
-
     # doesn't work -> works
     doesnt_regex = r'(doesn\'t|does not) (?P<verb>\w+)'
 
@@ -134,7 +130,7 @@ class SentenceNegator:
         if verb.endswith("y") and self.__is_consonant(verb[-2]):
           return "{0}ies".format(verb[0:-1])
 
-        for ending in ["ss", "x", "ch", "sh", "o"]:
+        for ending in self.IRREGULAR_ES_VERB_ENDINGS:
           if verb.endswith(ending):
             return "{0}es".format(verb)
 
@@ -155,7 +151,7 @@ class SentenceNegator:
         verb = "{0}y".format(verb[0:-2])
 
       # stresses -> stress
-      for ending in ["ss", "x", "ch", "sh", "o"]:
+      for ending in self.IRREGULAR_ES_VERB_ENDINGS:
         if verb.endswith("{0}e".format(ending)):
           verb = verb[0:-1]
 
@@ -164,8 +160,13 @@ class SentenceNegator:
     if re.search(verb_regex, sentence):
       return re.sub(verb_regex, replace_verb, sentence, 1)
 
-    print("NegateSentence: No sentence to negate")
+    show_message("No sentence to negate")
+
     return sentence
 
   def __is_consonant(self, letter):
     return letter not in ['a', 'e', 'i', 'o', 'u', 'y']
+
+def show_message(message):
+  print(message)
+  sublime.active_window().status_message("NegateSentence: {0}".format(message))
