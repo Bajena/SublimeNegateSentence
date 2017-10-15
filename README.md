@@ -4,15 +4,10 @@ A sublime text 3 plugin for negating english sentences (3rd person present simpl
 # Installation
 Copy `negatesentence.py` and `NegateSentence` directory to `/Users/<your-user-name>/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/`
 
-or use wget:
+or execute installation script (setup.sh):
 ```bash
-username=`id -un`
-wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/negatesentence.py -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/negatesentence.py"
-wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Default (OSX).sublime-keymap -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default (OSX).sublime-keymap"
-wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Default (Windows).sublime-keymap -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default (Windows).sublime-keymap"
-wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Default (Linux).sublime-keymap -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default (Linux).sublime-keymap"
-wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Default.sublime-commands -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Default.sublime-commands"
-wget https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/NegateSentence/Main.sublime-menu -O "/Users/$username/Library/Application Support/Sublime Text 3/Packages/User/NegateSentence/Main.sublime-menu"
+setup_url="https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/setup.sh"
+wget -O - $setup_url | sh
 ```
 
 # How to use?
