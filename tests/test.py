@@ -21,6 +21,12 @@ class TestNegateSentence(TestCase):
   def get_text(self):
     return self.view.substr(self.view.line(self.view.text_point(0, 0)))
 
+  def move_cursor(self, position):
+    pt = self.view.text_point(0, position)
+
+    self.view.sel().clear()
+    self.view.sel().add(sublime.Region(pt))
+
   def test_negate_is(self):
     self.check_substitution('"The dog is black"', '"The dog is not black"')
 
@@ -36,6 +42,12 @@ class TestNegateSentence(TestCase):
   def test_negate_has_an(self):
     self.check_substitution('"A man has an animal"', '"A man does not have an animal"')
 
+  def test_negate_has_to(self):
+    self.check_substitution('"has to be here"', '"does not have to be here"')
+
+  def test_negate_doesnt_have_to(self):
+    self.check_substitution('"A man does not have to be here"', '"A man has to be here"')
+
   def test_negate_doesnt_have(self):
     self.check_substitution('"A man doesn\'t have an animal"', '"A man has an animal"')
 
@@ -46,10 +58,28 @@ class TestNegateSentence(TestCase):
     self.check_substitution('"It shouldn\'t be red"', '"It should be red"')
 
   def test_negate_should_not(self):
+    self.check_substitution('"It should not be red"', '"It should be red"')
+
+  def test_negate_should(self):
     self.check_substitution('"It should be red"', '"It should not be red"')
 
-  def test_negate_should_not(self):
-    self.check_substitution('"It should not be red"', '"It should be red"')
+  def test_negate_mustnt(self):
+    self.check_substitution('"It mustn\'t be a snake"', '"It must be a snake"')
+
+  def test_negate_must(self):
+    self.check_substitution('"It must be a snake"', '"It must not be a snake"')
+
+  def test_negate_must_not(self):
+    self.check_substitution('"It must not be a snake"', '"It must be a snake"')
+
+  def test_negate_cant(self):
+    self.check_substitution('"It can\'t be true"', '"It can be true"')
+
+  def test_negate_cannot(self):
+    self.check_substitution('"It cannot be true"', '"It can be true"')
+
+  def test_negate_can(self):
+    self.check_substitution('"It can be a snake"', '"It cannot be a snake"')
 
   def test_negate_does_not(self):
     self.check_substitution('"It does not require a name"', '"It requires a name"')
@@ -66,11 +96,53 @@ class TestNegateSentence(TestCase):
   def test_negate_verb(self):
     self.check_substitution('"It replaces first occurence"', '"It does not replace first occurence"')
 
+  # irregulars
+  def test_negate_flies(self):
+    self.check_substitution('"It flies"', '"It does not fly"')
+
+  def test_negate_dies(self):
+    self.check_substitution('"It dies"', '"It does not die"')
+
+  def test_negate_kisses(self):
+    self.check_substitution('"It kisses"', '"It does not kiss"')
+
   def test_negate_does(self):
     self.check_substitution('"It does tricks"', '"It does not do tricks"')
 
-  def check_substitution(self, input, expected):
+  def test_negate_does_not_fly(self):
+    self.check_substitution('"It does not fly"', '"It flies"')
+
+  def test_negate_does_not_die(self):
+    self.check_substitution('"It does not die"', '"It dies"')
+
+  def test_negate_does_not_kiss(self):
+    self.check_substitution('"It does not kiss"', '"It kisses"')
+
+  def test_negate_does_not_do(self):
+    self.check_substitution('"It does not do"', '"It does"')
+
+  # proper quote detection
+  def test_no_replacement(self):
+    self.check_substitution('"Notasentence"', '"Notasentence"')
+
+  def test_no_quotes(self):
+    self.check_substitution('It is not a quoted sentence', 'It is not a quoted sentence')
+
+  def test_cursor_before_start_quote_no_substitute(self):
+    self.check_substitution('"It does tricks"', '"It does tricks"', 0)
+
+  def test_cursor_after_first_quote_substitute(self):
+    self.check_substitution('"It does tricks"', '"It does not do tricks"', 1)
+
+  def test_cursor_before_last_quote_substitute(self):
+    self.check_substitution('"It does tricks"', '"It does not do tricks"', 15)
+
+  def test_cursor_after_end_quote_no_substitute(self):
+    self.check_substitution('"It does tricks"', '"It does tricks"', 16)
+
+  def check_substitution(self, input, expected, cursor_position = 1):
     self.set_text(input)
+    self.move_cursor(cursor_position)
     self.view.run_command("negate_sentence")
     self.assertEqual(self.get_text(), expected)
 
