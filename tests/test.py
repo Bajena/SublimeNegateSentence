@@ -33,6 +33,9 @@ class TestNegateSentence(TestCase):
   def test_negate_isnt(self):
     self.check_substitution('"The dog isn\'t black"', '"The dog is black"')
 
+  def test_negate_isnt_backslash(self):
+    self.check_substitution("'The dog isn\\'t black'", "'The dog is black'")
+
   def test_negate_is_not(self):
     self.check_substitution('"The dog is not black"', '"The dog is black"')
 
@@ -51,11 +54,17 @@ class TestNegateSentence(TestCase):
   def test_negate_doesnt_have(self):
     self.check_substitution('"A man doesn\'t have an animal"', '"A man has an animal"')
 
+  def test_negate_doesnt_have_backslash(self):
+    self.check_substitution("'A man doesn\\'t have an animal'", "'A man has an animal'")
+
   def test_negate_does_not_have(self):
     self.check_substitution('"A man does not have an animal"', '"A man has an animal"')
 
   def test_negate_shouldnt(self):
     self.check_substitution('"It shouldn\'t be red"', '"It should be red"')
+
+  def test_negate_shouldnt_backslash(self):
+    self.check_substitution("'It shouldn\\'t be red'", "'It should be red'")
 
   def test_negate_should_not(self):
     self.check_substitution('"It should not be red"', '"It should be red"')
@@ -66,6 +75,9 @@ class TestNegateSentence(TestCase):
   def test_negate_mustnt(self):
     self.check_substitution('"It mustn\'t be a snake"', '"It must be a snake"')
 
+  def test_negate_mustnt_backslash(self):
+    self.check_substitution("'It mustn\\'t be a snake'", "'It must be a snake'")
+
   def test_negate_must(self):
     self.check_substitution('"It must be a snake"', '"It must not be a snake"')
 
@@ -74,6 +86,9 @@ class TestNegateSentence(TestCase):
 
   def test_negate_cant(self):
     self.check_substitution('"It can\'t be true"', '"It can be true"')
+
+  def test_negate_cant_backslash(self):
+    self.check_substitution("'It can\\'t be true'", "'It can be true'")
 
   def test_negate_cannot(self):
     self.check_substitution('"It cannot be true"', '"It can be true"')
@@ -89,6 +104,9 @@ class TestNegateSentence(TestCase):
 
   def test_negate_doesnt_verb(self):
     self.check_substitution('"It doesn\'t work"', '"It works"')
+
+  def test_negate_doesnt_verb_backslash(self):
+    self.check_substitution("'It doesn\\'t work'", "'It works'")
 
   def test_negate_does_not_verb(self):
     self.check_substitution('"It does not work"', '"It works"')
@@ -128,8 +146,8 @@ class TestNegateSentence(TestCase):
   def test_no_quotes(self):
     self.check_substitution('It is not a quoted sentence', 'It is not a quoted sentence')
 
-  def test_cursor_before_start_quote_no_substitute(self):
-    self.check_substitution('"It does tricks"', '"It does tricks"', 0)
+  def test_cursor_before_start_quote_substitute(self):
+    self.check_substitution('"It does tricks"', '"It does not do tricks"', 0)
 
   def test_cursor_after_first_quote_substitute(self):
     self.check_substitution('"It does tricks"', '"It does not do tricks"', 1)
@@ -137,10 +155,13 @@ class TestNegateSentence(TestCase):
   def test_cursor_before_last_quote_substitute(self):
     self.check_substitution('"It does tricks"', '"It does not do tricks"', 15)
 
-  def test_cursor_after_end_quote_no_substitute(self):
-    self.check_substitution('"It does tricks"', '"It does tricks"', 16)
+  def test_cursor_after_end_quote_substitute(self):
+    self.check_substitution('"It does tricks"    ', '"It does not do tricks"    ', 16)
 
-  def check_substitution(self, input, expected, cursor_position = 1):
+  def test_cursor_much_after_end_quote_no_substitute(self):
+    self.check_substitution('"It does tricks"    ', '"It does tricks"    ', 17)
+
+  def check_substitution(self, input, expected, cursor_position = 0):
     self.set_text(input)
     self.move_cursor(cursor_position)
     self.view.run_command("negate_sentence")

@@ -6,52 +6,38 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
   def description():
     "Negates a sentence (present simple only)"
 
+  def find_quotes(self):
+    quotes_regex = r'(\".*?\"|((?<!\\)\'.*?(?<!\\)\'))'
+    iterator = re.finditer(quotes_regex, self.current_line())
+    for match in iterator:
+      quote_span = match.span()
+      quote_span = (quote_span[0] + self.current_line_start(), quote_span[1] + self.current_line_start())
+      if self.cursor_position >= quote_span[0] and self.cursor_position <= quote_span[1]:
+        return (quote_span[0], quote_span[1])
+
   def run(self, edit):
     print("Running negate_sentence")
     self.cursor_position = self.view.sel()[0].begin()
 
-    quote_start = self.find_quote_start()
-    quote_end = self.find_quote_end()
-
-    in_quotes = quote_start is not None and quote_end is not None
-
-    print("Quote start: {0}".format(quote_start))
-    print("Quote end: {0}".format(quote_end))
-
-    if not in_quotes:
+    quote_range = self.find_quotes()
+    print(quote_range)
+    if not quote_range:
       show_message("No quotes found")
       return
 
-    word_region = sublime.Region(quote_start + 1, quote_end)
+    sentence_region = sublime.Region(quote_range[0] + 1, quote_range[1] - 1)
 
-    input_sentence = self.string_at(word_region)
+    input_sentence = self.string_at(sentence_region)
 
     negated_sentence = self.negate(input_sentence)
 
-    self.view.replace(edit, word_region, negated_sentence)
+    self.view.replace(edit, sentence_region, negated_sentence)
 
   def negate(self, sentence):
     return SentenceNegator().negate(sentence)
 
-  def find_quote_start(self):
-    current_line_start = self.current_line_start()
-    i = self.cursor_position - 1
-    while i >= current_line_start:
-      if self.char_at(i) == '"':
-        return i
-      i = i-1
-
-    return None
-
-  def find_quote_end(self):
-    current_line_end = self.current_line_end()
-    i = self.cursor_position
-    while i <= current_line_end:
-      if self.char_at(i) == '"':
-        return i
-      i = i+1
-
-    return None
+  def current_line(self):
+    return self.string_at(self.view.line(self.cursor_position))
 
   def current_line_start(self):
     return self.view.line(self.cursor_position).begin()
@@ -74,6 +60,9 @@ class SentenceNegator:
     if sentence.find("isn't") > -1:
       return sentence.replace("isn't", "is")
 
+    if sentence.find("isn\\'t") > -1:
+      return sentence.replace("isn\\'t", "is")
+
     if sentence.find("is not ") > -1:
       return sentence.replace("is not ", "is ")
 
@@ -87,12 +76,18 @@ class SentenceNegator:
     if sentence.find("doesn't have") > -1:
       return sentence.replace("doesn't have", "has")
 
+    if sentence.find("doesn\\'t have") > -1:
+      return sentence.replace("doesn\\'t have", "has")
+
     if sentence.find("has ") > -1:
       return sentence.replace("has ", "does not have ")
 
     # should
     if sentence.find("shouldn't") > -1:
       return sentence.replace("shouldn't", "should")
+
+    if sentence.find("shouldn\\'t") > -1:
+      return sentence.replace("shouldn\\'t", "should")
 
     if sentence.find("should not") > -1:
       return sentence.replace("should not", "should")
@@ -104,6 +99,9 @@ class SentenceNegator:
     if sentence.find("mustn't") > -1:
       return sentence.replace("mustn't", "must")
 
+    if sentence.find("mustn\\'t") > -1:
+      return sentence.replace("mustn\\'t", "must")
+
     if sentence.find("must not") > -1:
       return sentence.replace("must not", "must")
 
@@ -114,6 +112,9 @@ class SentenceNegator:
     if sentence.find("can't") > -1:
       return sentence.replace("can't", "can")
 
+    if sentence.find("can\\'t") > -1:
+      return sentence.replace("can\\'t", "can")
+
     if sentence.find("cannot") > -1:
       return sentence.replace("cannot", "can")
 
@@ -121,7 +122,7 @@ class SentenceNegator:
       return sentence.replace("can ", "cannot ")
 
     # doesn't work -> works
-    doesnt_regex = r'(doesn\'t|does not) (?P<verb>\w+)'
+    doesnt_regex = r'(doesn\'t|doesn\\\'t|does not) (?P<verb>\w+)'
 
     if re.search(doesnt_regex, sentence):
       def replace_doesnt(matchobj):
