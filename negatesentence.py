@@ -4,7 +4,7 @@ import re
 
 class NegateSentenceCommand(sublime_plugin.TextCommand):
   def description():
-    "Negates a sentence (present simple only)"
+    "Negates a 3rd person present simple sentence"
 
   def find_quotes(self):
     quotes_regex = r'(\".*?\"|((?<!\\)\'.*?(?<!\\)\'))'
@@ -41,12 +41,6 @@ class NegateSentenceCommand(sublime_plugin.TextCommand):
 
   def current_line_start(self):
     return self.view.line(self.cursor_position).begin()
-
-  def current_line_end(self):
-    return self.view.line(self.cursor_position).end()
-
-  def char_at(self, cursor_position):
-    return self.view.substr(cursor_position)
 
   def string_at(self, region):
     return self.view.substr(region)
