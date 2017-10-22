@@ -1,5 +1,6 @@
 # NegateSentence
 [![Build Status](https://travis-ci.org/Bajena/SublimeNegateSentence.svg?branch=master)](https://travis-ci.org/Bajena/SublimeNegateSentence)
+[![codecov](https://codecov.io/gh/Bajena/SublimeNegateSentence/branch/master/graph/badge.svg)](https://codecov.io/gh/Bajena/SublimeNegateSentence)
 
 A sublime text 3 plugin for negating simple english sentences (3rd person present simple). Useful e.g. when writing test cases.
 
