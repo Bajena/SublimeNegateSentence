@@ -4,7 +4,7 @@ A sublime text 3 plugin for negating english sentences (3rd person present simpl
 # Installation
 Copy `negatesentence.py` and `NegateSentence` directory to `/Users/<your-user-name>/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/`
 
-or execute installation script (setup.sh):
+or execute installation script - setup.sh (Mac OS X only):
 ```bash
 setup_url="https://raw.githubusercontent.com/Bajena/SublimeNegateSentence/master/setup.sh"
 wget -O - $setup_url | sh
