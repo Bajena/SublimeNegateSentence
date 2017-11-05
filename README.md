@@ -5,6 +5,16 @@
 A sublime text 3 plugin for negating simple english sentences (3rd person present simple). Useful e.g. when writing test cases.
 
 # Installation
+1. Install Package Control.
+
+2. In Sublime, press ctrl+shift+p(Windows, Linux) or cmd+shift+p(OS X).
+
+3. Type install, then press enter with Package Control: Install Package selected.
+
+4. Type `NegateSentence`, then press enter with the `NegateSentence` plugin selected
+
+or
+
 Clone this repo to `/Users/<your-user-name>/Library/Application\ Support/Sublime\ Text\ 3/Packages/`
 
 # How to use?
@@ -15,3 +25,6 @@ Install `UnitTesting` plugin for sublime (https://github.com/randy3k/UnitTesting
 
 # Preview
 ![negate2](https://user-images.githubusercontent.com/5732023/31322033-a75066ea-ac8f-11e7-83ca-da47313a800f.gif)
+
+# Read more [in Polish]
+Check out a blog post about building the plugin here: https://mycodeworksiknowwhy.wordpress.com/2017/10/23/piszemy-rozszerzenie-do-sublime-text-3/
